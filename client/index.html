@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet/less" href="css/index.less">
+    </head>
+    <body ng-app="bones" ng-controller="main">
+        <table>
+            <tr><td>wikipedia: </td><td>{{ sources.wikipedia.count }}</td> </tr>
+            <tr><td>tweets: </td><td>{{ sources.twitter.count }}</td></tr>
+        </table>
+
+        <!--
+        <table style="height:200px;width:100%;font-size:10pt;border:1px solid #eee;">
+            <tr ng-repeat="s in sources.wikipedia.register"><td>{{s.wikipedia_page_name}}</td></tr>
+        </table>
+        -->
+        <div class="twitter">
+            <table class="stats">
+                <tr><td>words: </td><td class="value">{{ sources.twitter.stats.tokens }}</td></tr>
+                <tr><td>hashtags: </td><td class="value">{{ sources.twitter.stats.nhashtags }}</td></tr>
+                <tr><td>@-mentions:</td><td class="value">{{ sources.twitter.stats.ats.length }}</td></tr>
+                <tr><td>authors: </td><td class="value">{{ sources.twitter.stats.authors.length }}</td></tr>
+                <tr><td>hashtags:</td><td></td></tr>
+                <tr ng-repeat='h in sources.twitter.stats.hashtags'><td></td><td class="hashtags" ng-bind='h'></td></tr>
+            </table>        
+            <table class="rows">
+                <tr ng-repeat="s in sources.twitter.register"><td>{{s.text}}</td></tr>
+            </table>            
+        </li>        
+        <script src="bower_components/less/dist/less.min.js"></script>
+        <script src="bower_components/jquery/dist/jquery.min.js"></script>
+        <script src="bower_components/underscore/underscore-min.js"></script>
+        <script src="bower_components/socket.io-client/socket.io.js"></script>
+        <script src="bower_components/angularjs/angular.min.js"></script>
+        <script src="bower_components/angular-socket-io/socket.min.js"></script>
+        <script src="bower_components/d3/d3.min.js"></script>
+        <script src="bower_components/paralleljs/lib/parallel.js"></script>   
+        <script src="js/index.js"></script>
+        <script src="js/utils.js"></script>
+    </body>
+</html>

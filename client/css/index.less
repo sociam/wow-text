@@ -1,0 +1,45 @@
+* { 
+	box-sizing:border-box;
+	font-family:'helvetica neue';
+}
+
+body {
+	padding:20px;
+}
+
+.twitter {
+	position:relative;
+	.rows {
+		width:60%;
+		height:400px;		
+		tr { margin-bottom:5px; }
+	}
+	.stats {
+		background-color:rgba(255,255,255,0.5);
+		position:absolute;
+		right:0px;
+		font-size:12pt;
+		.value {
+			// font-weight:bold;
+			font-size:72pt;
+			line-height:0.8em;
+		}
+		tr td { 
+			margin:0px; 
+			border-bottom:5px solid #eee !important; 
+		}
+		tr td:first-child { 
+			text-align:right; 
+		}
+		tr td:last-child {
+			padding-left:20px;
+			width:280px;
+			overflow:hidden;
+		}
+		.hashtags {
+			font-size:10pt;
+		}
+
+	}
+}
+
