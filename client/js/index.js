@@ -44,7 +44,7 @@ angular.module('bones', ['btford.socket-io'])
             }
         };
     }).controller('main', function($scope,utils,mysocket,wikiproc,twitterproc) { 
-        var u = utils, 
+        var u = $scope.u = utils, 
             sa = function(f) { return utils.safeApply($scope,f); },
             dict = function dict(pairs) { var o = {};    pairs.map(function(pair) { o[pair[0]] = pair[1]; }); return o; };
 

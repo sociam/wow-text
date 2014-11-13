@@ -7,12 +7,29 @@ body {
 	padding:20px;
 }
 
+.counts {
+	font-size:14pt;
+	.value { 
+		font-size: 72pt; 
+		color:#bbb; 
+	}
+	td:first-child {
+		text-align:right;
+		padding-right:20px;
+	}
+}
+
 .twitter {
 	position:relative;
 	.rows {
 		width:60%;
-		height:400px;		
-		tr { margin-bottom:5px; }
+		padding:20px 0px;
+		tr { 
+			td { 
+				border-bottom:5px solid #eee !important; 
+				padding:10px 0px;  
+			}
+		}
 	}
 	.stats {
 		background-color:rgba(255,255,255,0.5);
@@ -40,6 +57,11 @@ body {
 			font-size:10pt;
 		}
 
+	}
+	.progressbar {
+		position:absolute;
+		top:0px;
+		td { opacity:0.1; background-color:#e0f; color:#e0f; padding:1px 8px; border-radius:16px;}  
 	}
 }
 

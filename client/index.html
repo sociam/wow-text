@@ -12,9 +12,9 @@
         <link rel="stylesheet/less" href="css/index.less">
     </head>
     <body ng-app="bones" ng-controller="main">
-        <table>
-            <tr><td>wikipedia: </td><td>{{ sources.wikipedia.count }}</td> </tr>
-            <tr><td>tweets: </td><td>{{ sources.twitter.count }}</td></tr>
+        <table class="counts">
+            <tr><td>wikipedia edits </td><td class="value">{{ sources.wikipedia.count }}</td> </tr>
+            <tr><td>tweets </td><td class="value">{{ sources.twitter.count }}</td></tr>
         </table>
 
         <!--
@@ -23,6 +23,9 @@
         </table>
         -->
         <div class="twitter">
+            <table class="progressbar">
+                <tr><td ng-repeat="s in u.range(sources.twitter.queue.length)"> &nbsp; </td></tr>
+            </table>        
             <table class="stats">
                 <tr><td>words: </td><td class="value">{{ sources.twitter.stats.tokens }}</td></tr>
                 <tr><td>hashtags: </td><td class="value">{{ sources.twitter.stats.nhashtags }}</td></tr>
@@ -30,9 +33,9 @@
                 <tr><td>authors: </td><td class="value">{{ sources.twitter.stats.authors.length }}</td></tr>
                 <tr><td>hashtags:</td><td></td></tr>
                 <tr ng-repeat='h in sources.twitter.stats.hashtags'><td></td><td class="hashtags" ng-bind='h'></td></tr>
-            </table>        
-            <table class="rows">
-                <tr ng-repeat="s in sources.twitter.register"><td>{{s.text}}</td></tr>
+            </table>
+             <table class="rows">
+               <tr ng-repeat="s in sources.twitter.register"><td>{{s.text}}</td></tr>
             </table>            
         </li>        
         <script src="bower_components/less/dist/less.min.js"></script>
