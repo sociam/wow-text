@@ -48,9 +48,7 @@ angular.module('bones', ['btford.socket-io'])
         var u = $scope.u = utils, 
             sa = function(f) { return utils.safeApply($scope,f); },
             dict = function dict(pairs) { var o = {};    pairs.map(function(pair) { o[pair[0]] = pair[1]; }); return o; },
-            PARALLEL_ARGS = {
-                maxWorkers:4
-            };
+            PARALLEL_ARGS = {  maxWorkers:4   };
 
         var sources = $scope.sources = {
                 wikipedia: { 
@@ -64,7 +62,7 @@ angular.module('bones', ['btford.socket-io'])
                     reduce:twitterproc.reduce
                 }
             },
-            window_size = 10;
+            window_size = 5;
 
         _(sources).values().map(function(s) { 
             s.count = 0; s.queue = []; 
