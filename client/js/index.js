@@ -17,7 +17,7 @@ angular.module('bones', ['btford.socket-io'])
         return {
             process:function(json) { 
                 var tokens = json.text.trim()                
-                        .split(' ')
+                        .split(/[\s\.,\!\?]/) //  .split(' ')
                         .map(function(x) { return x.trim(); })
                         .filter(function(x) { return x.length > 0; }),
                     hashtags = tokens.filter(function(x) { return x.indexOf('#') == 0; }),
@@ -25,6 +25,7 @@ angular.module('bones', ['btford.socket-io'])
                     author = json.screen_name;
                 // count the hashtags
                 return { 
+                    chars : json.text.split('').length,
                     tokens : tokens.length,
                     hashtags : hashtags,                    
                     nhashtags : hashtags.length,
@@ -100,14 +101,16 @@ angular.module('bones', ['btford.socket-io'])
 
             if (sources.twitter.queue.length >= window_size) {
                 // console.log('twitter queue ',  sources.twitter.queue);
-                var pl = new Parallel(sources.twitter.queue);
+                var n = sources.twitter.queue.length,
+                    pl = new Parallel(sources.twitter.queue);
                 sources.twitter.queue = [];
-                pl.map(sources.twitter.processor).then(function(x,d) { 
-                    sources.wikipedia.computed = x;
-                    new Parallel(x).require(dict).reduce(sources.twitter.reduce).then(function(x) { 
+                pl.map(sources.twitter.processor).then(function(xc) { 
+                    sources.wikipedia.computed = xc;
+                    new Parallel(xc).require(dict).reduce(sources.twitter.reduce).then(function(x) { 
                         console.log('twitter stats!: ', x);
                         sa(function() { 
                             sources.twitter.stats = x; 
+                            sources.twitter.stats.n = n;
                             sources.twitter.stats.hashtags = u.uniqstr(sources.twitter.stats.hashtags);
                             sources.twitter.stats.hashtags.sort();
                             sources.twitter.stats.ats = u.uniqstr(sources.twitter.stats.ats);
@@ -118,5 +121,6 @@ angular.module('bones', ['btford.socket-io'])
                     });
                 });
             }
+            window.s = $scope;
         });
     });

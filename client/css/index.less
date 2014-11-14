@@ -8,9 +8,13 @@ body {
 }
 
 .counts {
+	position:absolute;
+	right:10px;
+	top:0px;
+	text-align:right;
 	font-size:14pt;
 	.value { 
-		font-size: 72pt; 
+		font-size: 144pt; 
 		color:#bbb; 
 	}
 	td:first-child {
@@ -20,21 +24,23 @@ body {
 }
 
 .twitter {
-	position:relative;
+	position:absolute;
+	width:100%;
 	.rows {
-		width:60%;
-		padding:20px 0px;
-		tr { 
-			td { 
-				border-bottom:5px solid #eee !important; 
-				padding:10px 0px;  
-			}
+		left:0px; 
+		width:40%;
+		.row {
+			width:100%;
+			padding:12px 0px 10px 3px; 
+			border-bottom:5px solid #eee;
 		}
 	}
 	.stats {
+		left:40%;
+		padding-left:20px;
 		background-color:rgba(255,255,255,0.5);
 		position:absolute;
-		right:0px;
+		// right:0px;
 		font-size:12pt;
 		.value {
 			// font-weight:bold;
@@ -58,10 +64,11 @@ body {
 		}
 
 	}
-	.progressbar {
-		position:absolute;
-		top:0px;
-		td { opacity:0.1; background-color:#e0f; color:#e0f; padding:1px 8px; border-radius:16px;}  
-	}
 }
+.progressbar {
+	position:absolute;
+	top:10px;
+	td { opacity:0.1; background-color:#e0f; color:#e0f; padding:1px 8px; border-radius:16px;}  
+}
+
 
