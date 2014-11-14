@@ -7,6 +7,10 @@ body {
 	padding:20px;
 }
 
+@colourhash : #eac;
+@colourtokens: #a22;
+@colourchars: #a0c;
+
 .counts {
 	position:absolute;
 	right:10px;
@@ -46,6 +50,9 @@ body {
 			// font-weight:bold;
 			font-size:72pt;
 			line-height:0.8em;
+			&.hashtags { color: @colourhash; }
+			&.tokens { color:@colourtokens; }
+			&.chars { color:@colourchars; }			
 		}
 		tr td { 
 			margin:0px; 
@@ -59,7 +66,7 @@ body {
 			width:280px;
 			overflow:hidden;
 		}
-		.hashtags {
+		.hashdisplay {
 			font-size:13pt;
 			color:#268;
 			div { display:inline-block; margin:2px 10px; }
@@ -75,7 +82,7 @@ body {
 
 .hist {
 	width:350px;
-	height:200px;
+	height:160px;
 	padding:4px;
 	// border:1px solid #eee;
 	svg {
@@ -102,4 +109,13 @@ body {
 			fill:#888;
 		}
 	}	
+}
+.chars.hist {
+	svg { .bar rect { fill:@colourchars; }	}
+}
+.tokens.hist {
+	svg { .bar rect { fill:@colourtokens; }	}
+}
+.hashtags.hist {
+	svg { .bar rect { fill:@colourhash; }	}
 }

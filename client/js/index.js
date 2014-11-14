@@ -64,7 +64,7 @@ angular.module('bones', ['btford.socket-io'])
                     reduce:twitterproc.reduce
                 }
             },
-            window_size = 5;
+            window_size = 10;
 
         _(sources).values().map(function(s) { 
             s.count = 0; s.queue = []; 

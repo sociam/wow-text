@@ -1,8 +1,7 @@
 module.exports = {
     connection: {
         host: 'app-001.ecs.soton.ac.uk',
-//        login: 'sociam',
-//        password: 'Sociam2014',
+        // host:'127.0.0.1',
         login: 'livementions',
         password: 'l1vementi0n5',
         port: 5672
