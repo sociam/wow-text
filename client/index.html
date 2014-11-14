@@ -33,8 +33,7 @@
                 <tr><td>hashtags/tweet: </td><td class="value">{{ sources.twitter.stats.nhashtags/sources.twitter.stats.n }}</td></tr>
                 <tr><td>@s/tweet:</td><td class="value">{{ sources.twitter.stats.ats.length/sources.twitter.stats.n }}</td></tr>
                 <tr><td>authors: </td><td class="value">{{ sources.twitter.stats.authors.length/sources.twitter.stats.n }}</td></tr>
-                <tr><td>hashtags:</td><td></td></tr>
-                <tr ng-repeat='h in sources.twitter.stats.hashtags'><td></td><td class="hashtags" ng-bind='h'></td></tr>
+                <tr><td>hashtags:</td><td class="hashtags"><div ng-repeat='h in sources.twitter.stats.hashtags' ng-bind='h'></div></td></tr>
             </table>
             <div class="rows">
                <div class="row" ng-repeat="s in sources.twitter.register" ng-bind="s.text"></tr>
