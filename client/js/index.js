@@ -67,6 +67,7 @@ angular.module('bones', ['btford.socket-io'])
             s.count = 0; s.queue = []; 
             s.register = [];
             s.computed = [];
+            s.stats_history = [];
         });
         // mysocket.addListener("wikipedia_hose", function (data) { 
         //     // console.log("wikipedia", data); 
@@ -106,17 +107,18 @@ angular.module('bones', ['btford.socket-io'])
                 sources.twitter.queue = [];
                 pl.map(sources.twitter.processor).then(function(xc) { 
                     sources.wikipedia.computed = xc;
-                    new Parallel(xc).require(dict).reduce(sources.twitter.reduce).then(function(x) { 
-                        console.log('twitter stats!: ', x);
+                    new Parallel(xc).require(dict).reduce(sources.twitter.reduce).then(function(stats) { 
+                        console.log('twitter stats!: ', stats);
+                        stats.n = n;
+                        stats.hashtags = u.uniqstr(stats.hashtags);
+                        stats.hashtags.sort();
+                        stats.ats = u.uniqstr(stats.ats);
+                        stats.ats.sort();
+                        stats.authors = u.uniqstr(stats.authors);
+                        stats.authors.sort();
                         sa(function() { 
-                            sources.twitter.stats = x; 
-                            sources.twitter.stats.n = n;
-                            sources.twitter.stats.hashtags = u.uniqstr(sources.twitter.stats.hashtags);
-                            sources.twitter.stats.hashtags.sort();
-                            sources.twitter.stats.ats = u.uniqstr(sources.twitter.stats.ats);
-                            sources.twitter.stats.ats.sort();
-                            sources.twitter.stats.authors = u.uniqstr(sources.twitter.stats.authors);
-                            sources.twitter.stats.authors.sort();
+                            sources.twitter.stats = stats;
+                            sources.twitter.stats_history.push(stats);
                         });
                     });
                 });
