@@ -19,7 +19,7 @@
         <table class="counts">
             <!--<tr><td>wikipedia edits </td><td class="value">{{ sources.wikipedia.count }}</td> </tr>-->
             <tr><td class="value">{{ sources.twitter.count }}</td></tr>
-            <tr><td><histogram data="sources.twitter.stats_history" field="chars"></histogram></td></tr>
+            <tr><td><histogram data="sources.twitter.computed" field="chars" xmax='140'></histogram></td></tr>
         </table>
 
         <!--
@@ -29,10 +29,10 @@
         -->
         <div class="twitter">
             <table class="stats" ng-show="sources.twitter.stats.n">
-                <tr><td>chars/tweet: </td><td class="value">{{ sources.twitter.stats.chars/sources.twitter.stats.n }}</td></tr>
-                <tr><td>words/tweet: </td><td class="value">{{ sources.twitter.stats.tokens/sources.twitter.stats.n }}</td></tr>
-                <tr><td>hashtags/tweet: </td><td class="value">{{ sources.twitter.stats.nhashtags/sources.twitter.stats.n }}</td></tr>
-                <tr><td>@s/tweet:</td><td class="value">{{ sources.twitter.stats.ats.length/sources.twitter.stats.n }}</td></tr>
+                <tr><td>chars/tweet: </td><td class="value">{{ sources.twitter.stats.avg_chars }}</td></tr>
+                <tr><td>words/tweet: </td><td class="value">{{ sources.twitter.stats.avg_tokens }}</td></tr>
+                <tr><td>hashtags/tweet: </td><td class="value">{{ sources.twitter.stats.avg_hashtags }}</td></tr>
+                <tr><td>@s/tweet:</td><td class="value">{{ sources.twitter.stats.avg_ats }}</td></tr>
                 <tr><td>authors: </td><td class="value">{{ sources.twitter.stats.authors.length/sources.twitter.stats.n }}</td></tr>
                 <tr><td>hashtags:</td><td class="hashtags"><div ng-repeat='h in sources.twitter.stats.hashtags' ng-bind='h'></div></td></tr>
 

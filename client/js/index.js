@@ -20,8 +20,8 @@ angular.module('bones', ['btford.socket-io'])
                         .split(/[\s\.,\!\?]/) //  .split(' ')
                         .map(function(x) { return x.trim(); })
                         .filter(function(x) { return x.length > 0; }),
-                    hashtags = tokens.filter(function(x) { return x.indexOf('#') == 0; }),
-                    ats = tokens.filter(function(x) { return x.indexOf('@') == 0; }),
+                    hashtags = tokens.filter(function(x) { return x.indexOf('#') === 0; }),
+                    ats = tokens.filter(function(x) { return x.indexOf('@') === 0; }),
                     author = json.screen_name;
                 // count the hashtags
                 return { 
@@ -72,28 +72,6 @@ angular.module('bones', ['btford.socket-io'])
             s.computed = [];
             s.stats_history = [];
         });
-        // mysocket.addListener("wikipedia_hose", function (data) { 
-        //     // console.log("wikipedia", data); 
-        //     data = JSON.parse(data.data);
-        //     sa(function() { sources.wikipedia.count++; });
-        //     sources.wikipedia.queue.push(data);
-        //     sources.wikipedia.register.push(data);
-        //     if (sources.wikipedia.register.length > window_size) { 
-        //         sources.wikipedia.register.shift();  
-        //     }
-        //     if (sources.wikipedia.queue.length >= 8) { 
-        //         var pl = new Parallel(sources.wikipedia.queue);
-        //         sources.wikipedia.queue = [];
-        //         pl.map(sources.wikipedia.processor).then(function(x,d) { 
-        //             // console.log('result ! ', x,d);
-        //             sources.wikipedia.computed = x;
-        //             new Parallel(x).require(dict).reduce(sources.wikipedia.reduce).then(function(x) { 
-        //                 console.log('wikipedia stats!: ', x);
-        //                 sa(function() { sources.wikipedia.stats = x; });
-        //             });
-        //         });
-        //     }
-        // });
         mysocket.addListener("twitter_hose", function (data) { 
             data = JSON.parse(data.data);            
             sa(function() { sources.twitter.count++; });
@@ -104,32 +82,31 @@ angular.module('bones', ['btford.socket-io'])
             }
 
             if (sources.twitter.queue.length >= window_size) {
-                // console.log('twitter queue ',  sources.twitter.queue);
                 var n = sources.twitter.queue.length,
                     pl = new Parallel(sources.twitter.queue, PARALLEL_ARGS);
                 sources.twitter.queue = [];
                 pl.map(sources.twitter.processor).then(function(xc) { 
-                    sources.wikipedia.computed = xc;
-                    sources.twitter.stats_history = sources.twitter.stats_history.concat(xc); // adding them
-
+                    sources.twitter.computed = xc.concat();
+                    // sources.twitter.stats_history = xc; // adding them
                     new Parallel(xc, PARALLEL_ARGS).require(dict).reduce(sources.twitter.reduce).then(function(stats) { 
                         console.log('twitter stats!: ', stats);
-                        stats.n = n;
-                        stats.hashtags = u.uniqstr(stats.hashtags);
-                        stats.hashtags.sort();
-                        stats.ats = u.uniqstr(stats.ats);
-                        stats.ats.sort();
-                        stats.authors = u.uniqstr(stats.authors);
-                        stats.authors.sort();
-
-                        stats.avg_chars = stats.chars/n;
-                        stats.avg_tokens = stats.tokens/n;
-                        stats.avg_hashtags = stats.nhashtags/n;                        
-                        stats.avg_ats = stats.ats.length/n;
-
-                        sa(function() { 
-                            sources.twitter.stats = stats;
-                        });
+                        var out = {
+                            n: n,
+                            hashtags:u.uniqstr(stats.hashtags),
+                            ats:u.uniqstr(stats.ats),
+                            authors : u.uniqstr(stats.authors),
+                            chars : stats.chars,
+                            tokens : stats.tokens,
+                            avg_tokens : stats.tokens/n,                            
+                            avg_chars : stats.chars/n,
+                        };
+                        console.log('out -- ', out);
+                        out.hashtags.sort();
+                        out.ats.sort();
+                        out.authors.sort();
+                        out.avg_ats = out.ats.length/n;
+                        out.avg_hashtags = out.hashtags.length/n;
+                        sa(function() { sources.twitter.stats = out;  });
                     });
                 });
             }
