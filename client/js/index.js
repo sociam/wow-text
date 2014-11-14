@@ -25,7 +25,7 @@ angular.module('bones', ['btford.socket-io'])
                     author = json.screen_name;
                 // count the hashtags
                 return { 
-                    chars : json.text.split('').length,
+                    chars : Math.min(140,json.text.split('').length),
                     tokens : tokens.length,
                     hashtags : hashtags,                    
                     nhashtags : hashtags.length,
@@ -47,7 +47,10 @@ angular.module('bones', ['btford.socket-io'])
     }).controller('main', function($scope,utils,mysocket,wikiproc,twitterproc) { 
         var u = $scope.u = utils, 
             sa = function(f) { return utils.safeApply($scope,f); },
-            dict = function dict(pairs) { var o = {};    pairs.map(function(pair) { o[pair[0]] = pair[1]; }); return o; };
+            dict = function dict(pairs) { var o = {};    pairs.map(function(pair) { o[pair[0]] = pair[1]; }); return o; },
+            PARALLEL_ARGS = {
+                maxWorkers:4
+            };
 
         var sources = $scope.sources = {
                 wikipedia: { 
@@ -61,7 +64,7 @@ angular.module('bones', ['btford.socket-io'])
                     reduce:twitterproc.reduce
                 }
             },
-            window_size = 20;
+            window_size = 5;
 
         _(sources).values().map(function(s) { 
             s.count = 0; s.queue = []; 
@@ -103,11 +106,13 @@ angular.module('bones', ['btford.socket-io'])
             if (sources.twitter.queue.length >= window_size) {
                 // console.log('twitter queue ',  sources.twitter.queue);
                 var n = sources.twitter.queue.length,
-                    pl = new Parallel(sources.twitter.queue);
+                    pl = new Parallel(sources.twitter.queue, PARALLEL_ARGS);
                 sources.twitter.queue = [];
                 pl.map(sources.twitter.processor).then(function(xc) { 
                     sources.wikipedia.computed = xc;
-                    new Parallel(xc).require(dict).reduce(sources.twitter.reduce).then(function(stats) { 
+                    sources.twitter.stats_history = sources.twitter.stats_history.concat(xc); // adding them
+
+                    new Parallel(xc, PARALLEL_ARGS).require(dict).reduce(sources.twitter.reduce).then(function(stats) { 
                         console.log('twitter stats!: ', stats);
                         stats.n = n;
                         stats.hashtags = u.uniqstr(stats.hashtags);
@@ -116,9 +121,14 @@ angular.module('bones', ['btford.socket-io'])
                         stats.ats.sort();
                         stats.authors = u.uniqstr(stats.authors);
                         stats.authors.sort();
+
+                        stats.avg_chars = stats.chars/n;
+                        stats.avg_tokens = stats.tokens/n;
+                        stats.avg_hashtags = stats.nhashtags/n;                        
+                        stats.avg_ats = stats.ats.length/n;
+
                         sa(function() { 
                             sources.twitter.stats = stats;
-                            sources.twitter.stats_history.push(stats);
                         });
                     });
                 });

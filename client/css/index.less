@@ -14,7 +14,7 @@ body {
 	text-align:right;
 	font-size:14pt;
 	.value { 
-		font-size: 144pt; 
+		font-size: 88pt; 
 		color:#bbb; 
 	}
 	td:first-child {
@@ -73,4 +73,33 @@ body {
 	td { opacity:0.1; background-color:#e0f; color:#e0f; padding:1px 8px; border-radius:16px;}  
 }
 
-
+.hist {
+	width:350px;
+	height:200px;
+	padding:4px;
+	// border:1px solid #eee;
+	svg {
+		width:100%;
+		height:100%;
+		.bar rect {
+			// fill: steelblue;
+			fill: #0ac;
+			shape-rendering: crispEdges;
+			stroke:none;
+		}
+		.bar text {
+		  fill: #fff;
+		  font-size:8pt;
+		}
+		.axis path, .axis line {
+		  fill: none;
+		  stroke: #000;
+		  shape-rendering: crispEdges;
+		}
+		.axis {
+			font-size:8pt;
+			stroke:none;
+			fill:#888;
+		}
+	}	
+}
