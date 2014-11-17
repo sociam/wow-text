@@ -26,7 +26,7 @@
             <tr><td>words / tweet</td><td class="value tokens">{{ sources.twitter.stats.avg_tokens }}</td></tr>
             <tr><td>hashtags / tweet </td><td class="value hashtags">{{ sources.twitter.stats.avg_hashtags }}</td></tr>
             <tr><td>@s / tweet:</td><td class="value">{{ sources.twitter.stats.avg_ats }}</td></tr>
-            <tr><td>authors </td><td class="value">{{ sources.twitter.stats.authors.length/sources.twitter.stats.n }}</td></tr>
+            <tr><td>authors </td><td class="value">{{ sources.twitter.stats.authors.length / sources.twitter.stats.n }}</td></tr>
             <tr><td>hashtags</td><td class="hashdisplay"><div ng-repeat='h in sources.twitter.stats.hashtags' ng-bind='h'></div></td></tr>
         </table>
         <div class="rows">

@@ -15,7 +15,7 @@ angular.module('bones')
 					svg = d3.select($element[0]).append("svg"),
 					hist = [],
 					mergeIntoHist = function(src) { 
-						console.log('merge into ', src);
+						// console.log('merge into ', src);
 						if (hist.length === 0) { 
 							hist = src;
 						} else {
@@ -28,7 +28,7 @@ angular.module('bones')
 								}
 							});
 						}
-						console.log('updated hist >> ', hist.length, hist);
+						// console.log('updated hist >> ', hist.length, hist);
 					};	// main data
 
 				var margin = {top: 0, right: 6, bottom: 20, left: 6},
@@ -44,10 +44,9 @@ angular.module('bones')
 						    x = d3.scale.linear().domain([0, dmax]).range([margin.left, margin.left+width]),
 							data = d3.layout.histogram().bins(x.ticks(ticks))(values);
 
-						console.log('dmax ', dmax, values);
+						// console.log('dmax ', dmax, values);
 
 						// merge data and hist
-						console.error('should have 30 slots  >>>>>>>>>>>>>>>>>>>>>>>>>> ', data.length);
 						mergeIntoHist(data);
 						data = hist;
 						window.hd = data;
@@ -94,7 +93,7 @@ angular.module('bones')
 					};
 
 					$scope.$watchCollection('data', function(d) {
-						console.log('data changed ', d);
+						// console.log('data changed ', d);
 						draw();
 						// var datas = d.map(function(x) { return x[$scope.field]; });
 						// console.log('things > ', $scope.field, datas);

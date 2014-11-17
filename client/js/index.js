@@ -22,10 +22,10 @@ angular.module('bones', ['btford.socket-io'])
                         .filter(function(x) { return x.length > 0; }),
                     hashtags = tokens.filter(function(x) { return x.indexOf('#') === 0; }),
                     ats = tokens.filter(function(x) { return x.indexOf('@') === 0; }),
-                    author = json.screen_name;
+                    author = json.user && json.user.screen_name;
                 // count the hashtags
                 return { 
-                    chars : Math.min(140,json.text.split('').length),
+                    chars : Math.min(140,json.text.length),
                     tokens : tokens.length,
                     hashtags : hashtags,                    
                     nhashtags : hashtags.length,
@@ -38,7 +38,7 @@ angular.module('bones', ['btford.socket-io'])
                 return dict(Object.keys(d0).map(function(k) { 
                     var v0 = d0[k], v1 = d1[k];
                         type = typeof v0;
-                    if (type == 'object' && v0.length !== undefined) { return [ k, v0.concat(v1) ]; }
+                    if (type == 'object' && v0.length !== undefined) { return [ k, uniqstr(v0.concat(v1)) ]; }
                     if (type == 'number') { return [ k, v0 + v1 ]; }
                     return 0;
                 }));
@@ -47,22 +47,23 @@ angular.module('bones', ['btford.socket-io'])
     }).controller('main', function($scope,utils,mysocket,wikiproc,twitterproc) { 
         var u = $scope.u = utils, 
             sa = function(f) { return utils.safeApply($scope,f); },
+            uniqstr = function uniqstr(L) {
+                var o = {}, i, l = L.length, r = [];
+                for(i=0; i<l;i+=1) { o[L[i]] = L[i]; }
+                for(i in o) { r.push(o[i]); }
+                return r;
+            },
             dict = function dict(pairs) { var o = {};    pairs.map(function(pair) { o[pair[0]] = pair[1]; }); return o; },
             PARALLEL_ARGS = {  maxWorkers:4   };
 
         var sources = $scope.sources = {
-                wikipedia: { 
-                    src: 'wikipedia_hose', 
-                    processor: wikiproc.process,
-                    reduce:wikiproc.reduce
-                },
                 twitter: {
                     src:'twitter_hose',
                     processor:twitterproc.process,
                     reduce:twitterproc.reduce
                 }
             },
-            window_size = 5;
+            window_size = 50;
 
         _(sources).values().map(function(s) { 
             s.count = 0; s.queue = []; 
@@ -70,9 +71,10 @@ angular.module('bones', ['btford.socket-io'])
             s.computed = [];
             s.stats_history = [];
         });
-        mysocket.addListener("twitter_hose", function (data) { 
+        mysocket.addListener("spinn3r_hose", function (data) { 
+            // if (sources.twitter.count > window_size+1) { return; }
+            $scope.$apply(function() { sources.twitter.count++; });            
             data = JSON.parse(data.data);            
-            sa(function() { sources.twitter.count++; });
             sources.twitter.queue.push(data);
             sources.twitter.register.push(data);
             if (sources.twitter.register.length > window_size) { 
@@ -81,30 +83,31 @@ angular.module('bones', ['btford.socket-io'])
 
             if (sources.twitter.queue.length >= window_size) {
                 var n = sources.twitter.queue.length,
-                    pl = new Parallel(sources.twitter.queue, PARALLEL_ARGS);
-                sources.twitter.queue = [];
+                    pl = new Parallel(sources.twitter.queue.splice(0,window_size), PARALLEL_ARGS);
+                // sources.twitter.queue = [];
                 pl.map(sources.twitter.processor).then(function(xc) { 
                     sources.twitter.computed = xc.concat();
-                    // sources.twitter.stats_history = xc; // adding them
-                    new Parallel(xc, PARALLEL_ARGS).require(dict).reduce(sources.twitter.reduce).then(function(stats) { 
-                        console.log('twitter stats!: ', stats);
+                    new Parallel(xc, PARALLEL_ARGS)
+                        .require(dict)
+                        .require(uniqstr).reduce(sources.twitter.reduce).then(function(stats) { 
                         var out = {
                             n: n,
-                            hashtags:u.uniqstr(stats.hashtags),
-                            ats:u.uniqstr(stats.ats),
-                            authors : u.uniqstr(stats.authors),
+                            hashtags:stats.hashtags,
+                            ats:stats.ats,
+                            authors : stats.authors,
                             chars : stats.chars,
                             tokens : stats.tokens,
                             avg_tokens : stats.tokens/n,                            
                             avg_chars : stats.chars/n,
                         };
-                        console.log('out -- ', out);
-                        out.hashtags.sort();
-                        out.ats.sort();
-                        out.authors.sort();
+                        // console.log('stats authors ', stats.authors, stats.authors.length);
+                        // console.log('out -- ', out);
+                        // out.hashtags.sort();
+                        // out.ats.sort();
+                        // out.authors.sort();
                         out.avg_ats = out.ats.length/n;
                         out.avg_hashtags = out.hashtags.length/n;
-                        sa(function() { sources.twitter.stats = out;  });
+                        $scope.$apply(function() { sources.twitter.stats = out;  });
                     });
                 });
             }

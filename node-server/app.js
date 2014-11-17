@@ -8,7 +8,6 @@ connection.on('ready', function () {
     connection.queue('', function (q) {
         config.exchanges.map(function(exc) { q.bind(exc, ''); });
         q.subscribe(function (message, headers, deliveryInfo, messageObject) {
-            console.log('headers ', deliveryInfo.exchange);
             console.log('emitting ', message.data.toString());
             io.sockets.emit(deliveryInfo.exchange, {"data": message.data.toString()});
         });
