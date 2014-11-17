@@ -9,6 +9,10 @@ body {
 	height:100%;
 }
 
+div,h1,h2,h3,h4,h5,p,span { 
+	-webkit-transform:translateZ(0);
+}
+
 @colourhash : #eac;
 @colourtokens: #a22;
 @colourchars: #a0c;
@@ -36,6 +40,7 @@ body {
 		width:100%;
 		padding:12px 20px 10px 3px; 
 		border-bottom:5px solid #fcfcfc;
+		overflow:hidden;
 	}
 }
 .stats {
@@ -56,7 +61,8 @@ body {
 		// font-weight:bold;
 		font-size:72pt;
 		line-height:0.8em;
-		&.hashtags { color: @colourhash; }
+		overflow:hidden;
+		&.hashtags { color: @colourhash; overflow:hidden; }
 		&.tokens { color:@colourtokens; }
 		&.chars { color:@colourchars; }			
 	}
