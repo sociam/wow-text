@@ -22,11 +22,11 @@
             <histogram class="hashtags" data="sources.twitter.computed" field="nhashtags" xmax='12'></histogram>
         </div>
         <table class="stats" ng-show="sources.twitter.stats.n">
-            <tr><td>chars / tweet</td><td class="value chars">{{ sources.twitter.stats.avg_chars }}</td></tr>
-            <tr><td>words / tweet</td><td class="value tokens">{{ sources.twitter.stats.avg_tokens }}</td></tr>
-            <tr><td>hashtags / tweet </td><td class="value hashtags">{{ sources.twitter.stats.avg_hashtags }}</td></tr>
-            <tr><td>@s / tweet:</td><td class="value">{{ sources.twitter.stats.avg_ats }}</td></tr>
-            <tr><td>authors </td><td class="value">{{ sources.twitter.stats.authors.length / sources.twitter.stats.n }}</td></tr>
+            <tr><td>chars / tweet</td><td class="value chars"><lineplot data="sources.twitter.stats.avg_chars"></lineplot>{{ sources.twitter.stats.avg_chars }}</td></tr>
+            <tr><td>words / tweet</td><td class="value tokens"><lineplot data="sources.twitter.stats.avg_tokens"></lineplot>{{ sources.twitter.stats.avg_tokens }}</td></tr>
+            <tr><td>hashtags / tweet </td><td class="value hashtags"><lineplot data="sources.twitter.stats.avg_hashtags"></lineplot>{{ sources.twitter.stats.avg_hashtags }}</td></tr>
+            <tr><td>@s / tweet:</td><td class="value"><lineplot data="sources.twitter.stats.avg_ats"></lineplot>{{ sources.twitter.stats.avg_ats }}</td></tr>
+            <tr><td>authors </td><td class="value"><lineplot data="sources.twitter.stats.authors.length"></lineplot>{{ sources.twitter.stats.authors.length / sources.twitter.stats.n }}</td></tr>
             <tr><td>hashtags</td><td class="hashdisplay"><div ng-repeat='h in sources.twitter.stats.hashtags' ng-bind='h'></div></td></tr>
         </table>
         <div class="rows">
@@ -42,6 +42,7 @@
         <script src="bower_components/paralleljs/lib/parallel.js"></script>   
         <script src="js/index.js"></script>
         <script src="js/hist.js"></script>
+        <script src="js/lineplot.js"></script>
         <script src="js/utils.js"></script>
     </body>
 </html>

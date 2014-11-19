@@ -17,7 +17,7 @@ angular.module('bones', ['btford.socket-io'])
         return {
             process:function(json_arr) { 
                 return json_arr.map(function(json) { 
-                    var tokens = json.text.trim()                
+                    var tokens = (json.text || '').trim()                
                             .split(/[\s\.,\!\?]/) //  .split(' ')
                             .map(function(x) { return x.trim(); })
                             .filter(function(x) { return x.length > 0; }),
