@@ -8,6 +8,14 @@ body {
 	width:100%;
 	height:100%;
 }
+.transition {
+  -webkit-transition:all @transitiondelay ease-in-out;
+  -moz-transition:all @transitiondelay ease-in-out;
+  -o-transition:all @transitiondelay ease-in-out;
+  transition:all @transitiondelay ease-in-out;
+}
+@transitiondelay: 0.3s;
+
 
 div,h1,h2,h3,h4,h5,p,span { 
 	-webkit-transform:translateZ(0);
@@ -42,7 +50,8 @@ div,h1,h2,h3,h4,h5,p,span {
 	border-left:20px solid #fcfcfc;
 	border-right:20px solid #fcfcfc;
 
-	background-color:#fcfcfc;
+	// background-color:#fcfcfc;
+	background-color:white;
 	position:absolute;
 	// right:0px;
 	font-size:12pt;

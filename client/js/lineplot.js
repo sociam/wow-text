@@ -18,13 +18,13 @@ angular.module('bones')
 				var margin = {top: 20, right: 0, bottom: 20, left: 0},
 					width = $element.width(),
 					height = $element.height(),
-				    x = d3.scale.linear().domain([0,N]).range([margin.left,width-margin.right]),
+				    x = d3.scale.linear().domain([N,0]).range([margin.left,width-margin.right]),
 				    y = d3.scale.linear().range([height - margin.bottom, margin.top]),
 				    draw = function() {
 				    	if (!values.length) { return; }
 						width = $element.width();
 						height = $element.height();
-					    x = d3.scale.linear().domain([0,N]).range([margin.left,width-margin.right]);
+					    x = d3.scale.linear().domain([N,0]).range([margin.left,width-margin.right]);
 					    y = d3.scale.linear().range([height - margin.bottom, margin.top]);
 						var xAxis = d3.svg.axis().scale(x).orient("bottom"),
 							yAxis = d3.svg.axis().scale(y).orient("left"),
@@ -40,6 +40,8 @@ angular.module('bones')
 
 						svg.selectAll('.line').datum(values)
 					       .attr("class", "line")
+					       .transition()
+					       .duration(600)
 					       .attr("d", line);
 
 						svg.selectAll('y axis')
