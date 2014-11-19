@@ -43,18 +43,18 @@ div,h1,h2,h3,h4,h5,p,span {
 	border-right:20px solid #fcfcfc;
 
 	background-color:#fcfcfc;
-
-	background-color:rgba(255,255,255,0.5);
 	position:absolute;
 	// right:0px;
 	font-size:12pt;
 	.row { 
+		background-color:white;
 		height:100%; 
 		width:100%;
-		margin:0px 0px 20px 0px;
+		margin:10px 0px 10px 0px;
+		padding:3px 0px 5px 0px;
 	}
 	.rowname, .hashname { 
-		background:rgba(255,255,255,0.4);
+		background:rgba(255,255,255,0.7);
 		color:#222;		
 		line-height:1.0em;
 		font-weight:200;		
@@ -63,7 +63,7 @@ div,h1,h2,h3,h4,h5,p,span {
 		position:absolute;
 		top:0%; bottom:0px;
 		left:0px; width:100px;
-		padding:20px 20px 10px 15px;
+		padding:25px 20px 10px 15px;
 		vertical-align:middle;
 	}
 	.value {
@@ -108,7 +108,7 @@ div,h1,h2,h3,h4,h5,p,span {
 }
 .progressbar {
 	position:absolute;
-	top:10px;
+	top:0px; left:0px;
 	td { opacity:0.1; background-color:#e0f; color:#e0f; padding:1px 8px; border-radius:16px;}  
 }
 .counts {
@@ -168,7 +168,7 @@ div,h1,h2,h3,h4,h5,p,span {
 }
 
 .lineplot {
-	opacity:0.2;
+	opacity:0.4;
 	position:absolute;
 	top:0px; right:0px; bottom:0px; left:0px;	
 	z-index:0;
@@ -182,7 +182,7 @@ div,h1,h2,h3,h4,h5,p,span {
 	.line {
 	  fill: none;
 	  stroke: #888; // steelblue;
-	  stroke-width: 10.5px;
+	  stroke-width: 6px;
 	}
 }
 .chars .lineplot .line {stroke:@colourchars; }			
