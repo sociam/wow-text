@@ -21,14 +21,29 @@
             <histogram class="tokens" data="sources.twitter.computed" field="tokens" xmax='25'></histogram>
             <histogram class="hashtags" data="sources.twitter.computed" field="nhashtags" xmax='12'></histogram>
         </div>
-        <table class="stats" ng-show="sources.twitter.stats.n">
-            <tr><td>chars / tweet</td><td class="value chars"><lineplot data="sources.twitter.stats.avg_chars"></lineplot>{{ sources.twitter.stats.avg_chars }}</td></tr>
-            <tr><td>words / tweet</td><td class="value tokens"><lineplot data="sources.twitter.stats.avg_tokens"></lineplot>{{ sources.twitter.stats.avg_tokens }}</td></tr>
-            <tr><td>hashtags / tweet </td><td class="value hashtags"><lineplot data="sources.twitter.stats.avg_hashtags"></lineplot>{{ sources.twitter.stats.avg_hashtags }}</td></tr>
-            <tr><td>@s / tweet:</td><td class="value"><lineplot data="sources.twitter.stats.avg_ats"></lineplot>{{ sources.twitter.stats.avg_ats }}</td></tr>
-            <tr><td>authors </td><td class="value"><lineplot data="sources.twitter.stats.authors.length"></lineplot>{{ sources.twitter.stats.authors.length / sources.twitter.stats.n }}</td></tr>
-            <tr><td>hashtags</td><td class="hashdisplay"><div ng-repeat='h in sources.twitter.stats.hashtags' ng-bind='h'></div></td></tr>
-        </table>
+        <div class="stats" ng-show="sources.twitter.stats.n">
+            <div class="row chars">
+                <lineplot data="sources.twitter.stats.avg_chars"></lineplot>            
+                <div class="rowname">chars / tweet</div><div class="value">{{ sources.twitter.stats.avg_chars }}</div>
+            </div>
+            <div class="row tokens">
+                <lineplot data="sources.twitter.stats.avg_tokens"></lineplot>
+                <div class="rowname">words / tweet</div><div class="value tokens">{{ sources.twitter.stats.avg_tokens }}</div>
+            </div>
+            <div class="row hashtags">
+                <lineplot data="sources.twitter.stats.avg_hashtags"></lineplot>             
+                <div class="rowname">hashtags / tweet </div><div class="value hashtags">{{ sources.twitter.stats.avg_hashtags }}</div>
+            </div>
+            <div class="row">
+                <lineplot data="sources.twitter.stats.avg_ats"></lineplot>
+                <div class="rowname">@-ments / tweet:</div><div class="value">{{ sources.twitter.stats.avg_ats }}</div>
+            </div>
+            <div class="row">
+                <lineplot data="sources.twitter.stats.authors.length"></lineplot>            
+                <div class="rowname">authors / tweet</div><div class="value">{{ sources.twitter.stats.authors.length / sources.twitter.stats.n }}</div>
+            </div>
+            <div class="row"><div class="hashname">hashtags</div><div class="hashvalue"><div ng-repeat='h in sources.twitter.stats.hashtags' ng-bind='h'></div></div></div>
+        </div>
         <div class="rows">
            <div class="row" ng-repeat="s in sources.twitter.register" ng-bind="s.text"></tr>
         </div>   

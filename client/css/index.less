@@ -17,7 +17,6 @@ div,h1,h2,h3,h4,h5,p,span {
 @colourtokens: #a22;
 @colourchars: #a0c;
 
-
 .rows {
 	position:absolute;
 	left:20px; 
@@ -49,16 +48,35 @@ div,h1,h2,h3,h4,h5,p,span {
 	position:absolute;
 	// right:0px;
 	font-size:12pt;
+	.row { 
+		height:100%; 
+		width:100%;
+		margin:0px 0px 20px 0px;
+	}
+	.rowname, .hashname { 
+		background:rgba(255,255,255,0.4);
+		color:#222;		
+		line-height:1.0em;
+		font-weight:200;		
+	}
+	.rowname {
+		position:absolute;
+		top:0%; bottom:0px;
+		left:0px; width:100px;
+		padding:20px 20px 10px 15px;
+		vertical-align:middle;
+	}
 	.value {
 		z-index:10;
+		margin-left:100px;		
 		position:relative;
 		// font-weight:bold;
 		font-size:72pt;
 		line-height:0.8em;
-		&.hashtags { color: @colourhash; }
-		&.tokens { color:@colourtokens; }
-		&.chars { color:@colourchars; }			
 	}
+	.hashtags .value { color: @colourhash; }
+	.tokens .value { color:@colourtokens; }
+	.chars .value { color:@colourchars; }			
 	tr td { 
 		background-color:white;
 		margin:0px; 
@@ -75,11 +93,16 @@ div,h1,h2,h3,h4,h5,p,span {
 		padding-left:20px;
 		overflow:hidden;
 	}
-	.hashdisplay {
+	.hashname { 
+		padding:5px 0px 5px 15px;
+	}
+	.hashvalue {
 		font-size:13pt;
 		color:#268;
-		div { display:inline-block; margin:2px 10px; }
-		height:210px;
+		div { display:inline-block; margin:0px 10px 2px 0px; }
+		font-weight:200;
+		padding:5px 0px 5px 15px;
+		width:100%;
 	}
 
 }
@@ -147,18 +170,15 @@ div,h1,h2,h3,h4,h5,p,span {
 .lineplot {
 	opacity:0.2;
 	position:absolute;
-	// background-color:#fef;
+	top:0px; right:0px; bottom:0px; left:0px;	
 	z-index:0;
-	top:0px; right:0px; bottom:0px; left:0px;
-	border:1px solid #fff;
+	// border:1px solid #fe0;
 	.axis path,.axis line {
 	  fill: none;
 	  stroke: #000;
 	  shape-rendering: crispEdges;
 	}
-
 	.x.axis path { display: none;}
-
 	.line {
 	  fill: none;
 	  stroke: #888; // steelblue;
