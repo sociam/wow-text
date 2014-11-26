@@ -24,6 +24,7 @@ div,h1,h2,h3,h4,h5,p,span {
 @colourhash : #eac;
 @colourtokens: #a22;
 @colourchars: #a0c;
+@colourenglish: #aa4;
 
 .rows {
 	position:absolute;
@@ -197,4 +198,19 @@ div,h1,h2,h3,h4,h5,p,span {
 .chars .lineplot .line {stroke:@colourchars; }			
 .tokens .lineplot .line { stroke: @colourtokens; }
 .hashtags .lineplot	.line { stroke:@colourhash; }
-
+.ats {
+	.value { color:#0ff; }
+	.lineplot .line { 
+		stroke:#0ff; 
+	}
+}
+.authors {
+	.value { color:#0ea; }
+	.lineplot .line {
+		stroke:#0ea;
+	}
+}
+.english  { 
+	.value { color:@colourenglish; }
+	.lineplot .line { stroke:@colourenglish; }
+}

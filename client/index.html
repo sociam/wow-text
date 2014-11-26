@@ -34,14 +34,18 @@
                 <lineplot data="sources.twitter.stats.avg_hashtags"></lineplot>             
                 <div class="rowname">hashtags / tweet </div><div class="value hashtags">{{ sources.twitter.stats.avg_hashtags }}</div>
             </div>
-            <div class="row">
+            <div class="row ats">
                 <lineplot data="sources.twitter.stats.avg_ats"></lineplot>
                 <div class="rowname">@-ments / tweet:</div><div class="value">{{ sources.twitter.stats.avg_ats }}</div>
             </div>
-            <div class="row">
+            <div class="row authors">
                 <lineplot data="sources.twitter.stats.authors.length"></lineplot>            
                 <div class="rowname">authors / tweet</div><div class="value">{{ sources.twitter.stats.authors.length / sources.twitter.stats.n }}</div>
             </div>
+            <div class="row english">
+                <lineplot data="sources.twitter.stats.avg_eng"></lineplot>
+                <div class="rowname">english</div><div class="value">{{ sources.twitter.stats.avg_eng*100 }}%</div>
+            </div>            
             <div class="row"><div class="hashname">hashtags</div><div class="hashvalue"><div ng-repeat='h in sources.twitter.stats.hashtags' ng-bind='h'></div></div></div>
         </div>
         <div class="rows">

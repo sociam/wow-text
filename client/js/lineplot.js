@@ -52,12 +52,12 @@ angular.module('bones')
 
 					$scope.$watch('data', function(d) {
 						if (d !== undefined) {
-							console.log('width ', width);
+							// console.log('width ', width);
 							values.push(d);
 							if (values.length > N) { values.shift();	}
 							draw();
 						}
-						console.log('parent height ', $element.parent().height());
+						// console.log('parent height ', $element.parent().height());
 						$element.height($element.parent().height());
 						$element.width($element.parent().width());						
 					});
