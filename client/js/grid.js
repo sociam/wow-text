@@ -73,7 +73,7 @@ angular.module('bones', ['btford.socket-io'])
         var u = $scope.u = utils, 
             sa = function(f) { return utils.safeApply($scope,f); },
             ncols = $scope.ncols = 7,
-            nrows = $scope.nrows = 35,
+            nrows = $scope.nrows = 15,
             uniqstr = function uniqstr(L) {
                 var o = {}, i, l = L.length, r = [];
                 for(i=0; i<l;i+=1) { o[L[i]] = L[i]; }
