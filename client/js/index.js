@@ -4,7 +4,7 @@
 angular.module('bones', ['btford.socket-io']).factory('lang', function(utils) { 
     	var ds = {},
     		u = utils,
-    		srcs = { en : 'data/wordsEN.txt' };
+    		srcs = { en : 'data/wordsEn.txt' };
     	return {
     		getDict: function(lang)  {
     			if (ds[lang]) { return u.dresolved(ds[lang]); }
