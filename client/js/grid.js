@@ -67,7 +67,7 @@ angular.module('bones', ['btford.socket-io'])
     }).controller('main', function($scope,utils,mysocket,twitterproc,lang) { 
         var u = $scope.u = utils, 
             sa = function(f) { return utils.safeApply($scope,f); },
-            ncols = $scope.ncols = 7,
+            ncols = $scope.ncols = 12,
             nrows = $scope.nrows = 15,
             uniqstr = function uniqstr(L) {
                 var o = {}, i, l = L.length, r = [];
