@@ -30,9 +30,9 @@ angular.module('bones', ['btford.socket-io'])
                             .map(function(x) { return x && x.trim() || ''; })
                             .filter(function(x) { return x && x.length > 0; }),
                         hashtags = tokens.filter(function(x) { return x && x.indexOf('#') === 0; }),
-                        ats = tokens.filter(function(x) { return x && x.indexOf('@') === 0; }),
+                        // ats = tokens.filter(function(x) { return x && x.indexOf('@') === 0; }),
                         links = tokens.filter(function(x) { return x && x.indexOf('http') === 0; }),
-                        author = json.user && json.user.screen_name,
+                        // author = json.user && json.user.screen_name,
                         eng_words = tokens.filter(function(x) { return x && global.env.eng[x.toLowerCase().trim()]; }),
                         eng_ratio = eng_words.length/(1.0*(tokens.length || 1)),
                         atmsg = (json.text || '').indexOf('@') == 0,
@@ -44,9 +44,9 @@ angular.module('bones', ['btford.socket-io'])
                         hashtags : hashtags,                    
                         nlinks : links && links.length || 0,
                         nhashtags : hashtags && hashtags.length || 0,
-                        ats : ats,
+                        // ats : ats,
                         atmsg : atmsg,
-                        authors : [author],
+                        // authors : [author],
                         is_eng: is_eng ? 1 : 0
                     };
                 });
