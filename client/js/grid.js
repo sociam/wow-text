@@ -2,15 +2,10 @@
 /* global io, require, exports, console, process, module, L, angular, _, jQuery, window, document, Image, Backbone, syncedStorageGUID, Parallel */
 
 angular.module('bones', ['btford.socket-io']) 
-    .controller('main', function($scope, $rootScope) { 
-    }).run(function() {}).factory('mysocket', function (socketFactory) {
-        var myIoSocket = io.connect('http://localhost:3000/'),
-            socket = socketFactory({ ioSocket: myIoSocket });
-        return socket;
-    }).factory('lang', function(utils) { 
+    .factory('lang', function(utils) { 
     	var ds = {},
     		u = utils,
-    		srcs = { en : 'data/wordsEN.txt' };
+    		srcs = { en : 'data/wordsEn.txt' };
     	return {
     		getDict: function(lang)  {
     			if (ds[lang]) { return u.dresolved(ds[lang]); }
