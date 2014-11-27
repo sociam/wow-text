@@ -39,7 +39,8 @@ angular.module('bones', ['btford.socket-io'])
                         links = tokens.filter(function(x) { return x && x.indexOf('http') === 0; }),
                         author = json.user && json.user.screen_name,
                         eng_words = tokens.filter(function(x) { return x && global.env.eng[x.toLowerCase().trim()]; }),
-                        eng_ratio = eng_words.length/(1.0*tokens.length || 1),
+                        eng_ratio = eng_words.length/(1.0*(tokens.length || 1)),
+                        atmsg = (json.text || '').indexOf('@') == 0,
                         is_eng = eng_ratio > 0.2;
                     return { 
                         text:json.text || '',
@@ -49,6 +50,7 @@ angular.module('bones', ['btford.socket-io'])
                         nlinks : links && links.length || 0,
                         nhashtags : hashtags && hashtags.length || 0,
                         ats : ats,
+                        atmsg : atmsg,
                         authors : [author],
                         is_eng: is_eng ? 1 : 0
                     };
@@ -71,7 +73,7 @@ angular.module('bones', ['btford.socket-io'])
         var u = $scope.u = utils, 
             sa = function(f) { return utils.safeApply($scope,f); },
             ncols = $scope.ncols = 7,
-            nrows = $scope.nrows = 40,
+            nrows = $scope.nrows = 35,
             uniqstr = function uniqstr(L) {
                 var o = {}, i, l = L.length, r = [];
                 for(i=0; i<l;i+=1) { o[L[i]] = L[i]; }
@@ -81,7 +83,7 @@ angular.module('bones', ['btford.socket-io'])
             dict = function dict(pairs) { var o = {};    pairs.map(function(pair) { o[pair[0]] = pair[1]; }); return o; };
 
         lang.getDict('en').then(function(eng) { 
-            console.log('eng is -- ', eng);
+            // console.log('eng is -- ', eng);
             var sources = $scope.sources = {
                     twitter: {
                         src:'twitter_hose',
@@ -89,7 +91,7 @@ angular.module('bones', ['btford.socket-io'])
                         reduce:twitterproc.reduce
                     }
                 },
-                window_size = 100,
+                window_size = 140,
                 i = $scope.i = 0;
 
             _(sources).values().map(function(s) { 
@@ -106,7 +108,7 @@ angular.module('bones', ['btford.socket-io'])
                         n = workpile.length,
                         pl = new Parallel(workpile, { env : { eng: eng } });
                     pl.spawn(sources.twitter.processor).then(function(xc) { 
-                        console.log(xc.map(function(x) { return x.nlinks; }));
+                        // console.log(xc.map(function(x) { return x.nlinks; }));
                         sa(function() { 
                             var todel = sources.twitter.computed.length >= nrows * ncols ? nrows*ncols : 0;
                             // sources.twitter.computed.splice.apply(sources.twitter.computed,
@@ -114,7 +116,7 @@ angular.module('bones', ['btford.socket-io'])
                             // i += xc.length;
                             // i = i % nrows * ncols;
                             sources.twitter.computed = sources.twitter.computed.concat(xc).slice(-nrows*ncols);
-                            console.log(sources.twitter.computed.length);
+                            // console.log(sources.twitter.computed.length);
                         });
                     });
                 }

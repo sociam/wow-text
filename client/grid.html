@@ -12,7 +12,7 @@
         <link rel="stylesheet/less" href="css/grid.less">
     </head>
     <body ng-app="bones" ng-controller="main">
-        <div ng-repeat="c in u.range(ncols)" class="col"><div ng-repeat="r in u.range(nrows)" ng-bind="sources.twitter.computed[c*nrows + r].text" ng-class="{row:true,eng:sources.twitter.computed[c*nrows + r].is_eng,hashtag:sources.twitter.computed[c*nrows + r].nhashtags>0,links:sources.twitter.computed[c*nrows + r].nlinks > 0}"></div></div>   
+        <div ng-repeat="c in u.range(ncols)" class="col"><div ng-repeat="r in u.range(nrows)" ng-bind="sources.twitter.computed[c*nrows + r].text" ng-class="{row:true,eng:sources.twitter.computed[c*nrows + r].is_eng,hashtag:sources.twitter.computed[c*nrows + r].nhashtags>0,links:sources.twitter.computed[c*nrows + r].nlinks > 0,atmsg:sources.twitter.computed[c*nrows + r].atmsg}"></div></div>   
         <script src="bower_components/less/dist/less.min.js"></script>
         <script src="bower_components/jquery/dist/jquery.min.js"></script>
         <script src="bower_components/underscore/underscore-min.js"></script>
